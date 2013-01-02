@@ -21,7 +21,11 @@ if( $id == 0 ) {
 			include '../templates/home.php';
 		} else {
 			header( 'HTTP/1.1 303 See Other' );
-			header( 'Location: ' . $basePath . '/index.php?id=' . $authority->id . '&format=' . $format );
+			$url = $basePath . '/index.php?id=' . $authority->id . '&format=' . $format;
+			if( isset( $_GET['callback'] ) ) {
+				$url .= '&callback=' . $_GET['callback'];
+			}
+			header( 'Location: ' . $url );
 		}
 	}
 } else {
@@ -52,7 +56,12 @@ if( $id == 0 ) {
 	switch( $format ) {
 		case 'json':
 			header( 'Content-Type: application/json; charset=utf-8' );
-			echo json_encode( $data );
+			header( 'access-control-allow-origin: *' );
+			if( isset( $_GET['callback'] ) ) {
+				echo $_GET['callback'] . '(' . json_encode( $data ) . ')';
+			} else {
+				echo json_encode( $data );
+			}
 			break;
 		case 'php':
 			header( 'Content-Type: application/vnd.php.serialized; charset=utf-8' );
