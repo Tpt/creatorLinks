@@ -31,7 +31,7 @@ class Storage {
 		}
 		while( $data = $result->fetch() ) {
 			$auth = new Authority();
-			$auth->id = $data['id'];
+			$auth->id = intval( $data['id'] );
 			$auth->name = $data['name'];
 			$auth->birthYear = $data['birthYear'];
 			$auth->deathYear = $data['deathYear'];
