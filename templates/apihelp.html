@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>CreatorLinks API</title>
+</head>
+<body>
+<pre>
+  
+Parameters:
+  format              - The format of the output
+                        One value: json, php
+                        Default: json
+  action              - What action you would like to perform. See below for module help
+                        One value: query
+                        Default: query
+
+
+<b>*** *** *** *** *** *** *** *** *** *** *** *** *** ***  Modules  *** *** *** *** *** *** *** *** *** *** *** *** *** ***</b> 
+
+<b>* action=query *</b>
+  API module to get the data for multiple entries of the base.
+  The loading may be long if the database refresh its data from an external service.
+
+Parameters:
+  ids                 - The IDs of the entities to get the data from
+                        Separate values with '|'
+  sites               - Identifier for the site on which the corresponding page resides
+                        Use together with 'titles', give one site by title.
+                        Values (separate with '|'): all possible site id, including isni
+  titles              - The title of the corresponding page
+                        Use together with 'sites', give one site by title.
+                        If you want all the entries with a link to a site use "*" value
+                        Values (separate with '|'): all existing titles and "*"
+  limit               - The number of entries to return
+                        Maximum number of values 50 (500 for bots)
+  offset              - Offset of the query, used for to long queries. Currently works only for queries like <a href="api.php?sites=frsource&amp;titles=*">api.php?sites=frsource&amp;titles=*</a>
+
+Examples:
+  Get entry with ID 234
+    <a href="api.php?action=query&amp;ids=234">api.php?action=query&amp;ids=234</a>
+  Get entry with a link to "Auteur:Jean-François_Champollion" in fr.wikisource.org:
+    <a href="api.php?action=query&amp;sites=frsource&amp;titles=Auteur:Jean-François_Champollion">api.php?action=query&amp;sites=frsource&amp;titles=Auteur:Jean-François_Champollion</a>
+  Get all the entries with a link to fr.wikisource.org:
+    <a href="api.php?action=query&amp;sites=frsource&amp;titles=*">api.php?action=query&amp;sites=frsource&amp;titles=*</a>
+</pre>
+</body>
+</html>

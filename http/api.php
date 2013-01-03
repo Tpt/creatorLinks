@@ -43,6 +43,10 @@ if( $ids == array() ) {
 				}
 			}
 		}
+	} else {
+		header( 'Content-Type: text/html; charset=utf-8' );
+		include '../templates/apihelp.html';
+		exit();
 	}
 } else {
 	foreach( $ids as $id ) {
