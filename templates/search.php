@@ -1,5 +1,13 @@
 <?php include 'header.php';
 if( $data != array() ) {
+	echo '<div class="pagination"><ul>';
+	if( $offset > 0 ) {
+		echo '<li><a href="' . $basePath . '/search.php?search=' . $search . '&limit=' . $limit . '&offset=' . max( $offset - $limit, 0 ) . '">Prev</a></li>';
+	}
+	if( count( $data ) >= $limit ) {
+		echo '<li><a href="' . $basePath . '/search.php?search=' . $search . '&limit=' . $limit . '&offset=' . ($offset + count( $data )) . '">Next</a></li>';
+	}
+	echo '</ul></div>';
 	echo '<table class="table table-striped">';
 	/*<thead>
 		<tr>
@@ -24,6 +32,14 @@ if( $data != array() ) {
 		echo '</a></td>' . "\n";
 	}
 	echo '</tbody></table>';
+	echo '<div class="pagination"><ul>';
+	if( $offset > 0 ) {
+		echo '<li><a href="' . $basePath . '/search.php?search=' . $search . '&limit=' . $limit . '&offset=' . max( $offset - $limit, 0 ) . '">Prev</a></li>';
+	}
+	if( count( $data ) >= $limit ) {
+		echo '<li><a href="' . $basePath . '/search.php?search=' . $search . '&limit=' . $limit . '&offset=' . ($offset + count( $data )) . '">Next</a></li>';
+	}
+	echo '</ul></div>';
 }
 include 'footer.php';
 exit(); ?>

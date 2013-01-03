@@ -24,6 +24,27 @@ class Storage {
 		}
 	}
 
+	public function getAuthorityWithSite( $site, $offset = 0, $limit = 100 ) {
+		$result = $this->db->query( 'SELECT id, name, birthYear, deathYear FROM entry, link WHERE link.entry_id = entry.id AND link.site = ' . $this->db->quote( $site ) . ' ORDER BY id ASC LIMIT ' . intval( $offset ) . ',' . intval( $limit ) );
+		$auths = array();
+		if( !$result ) {
+			return array();
+		}
+		while( $data = $result->fetch() ) {
+			if( isset( $auths[$data['id']] ) ) {
+				continue;
+			}
+			$auth = new Authority();
+			$auth->id = $data['id'];
+			$auth->name = $data['name'];
+			$auth->birthYear = $data['birthYear'];
+			$auth->deathYear = $data['deathYear'];
+			$auth->links = $this->getLinksForId( $auth->id );
+			$auths[$data['id']] = $auth;
+		}
+		return $auths;
+	}
+
 	public function getAuthorityFromId( $id ) {
 		$result = $this->db->query( 'SELECT id, name, birthYear, deathYear FROM entry WHERE id = ' . $this->db->quote( $id ) );
 		if( !$result ) {
@@ -88,8 +109,8 @@ class Storage {
 		}
 	}
 
-	public function search( $search ) {
-		$result = $this->db->query( 'SELECT id, name, birthYear, deathYear FROM entry, link WHERE link.entry_id = entry.id AND link.title LIKE ' . $this->db->quote( '%' . $search . '%' ) . ' LIMIT 100');
+	public function search( $search, $offset = 0, $limit = 100 ) {
+		$result = $this->db->query( 'SELECT DISTINCT id, name, birthYear, deathYear FROM entry, link WHERE link.entry_id = entry.id AND link.title LIKE ' . $this->db->quote( '%' . $search . '%' ) . ' ORDER BY id ASC LIMIT ' . intval( $offset ) . ',' . intval( $limit ) );
 		$auths = array();
 		if( !$result ) {
 			return array();

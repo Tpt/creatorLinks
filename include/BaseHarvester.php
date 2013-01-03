@@ -344,4 +344,20 @@ class BaseHarvester {
 			}
 		}
 	}
+
+	public function update( $authority ) {
+		$updated = false;
+		if( ( isset( $authority->links['viaf'] ) || isset( $authority->links['enwiki'] ) ) && !isset( $authority->links['isni'] ) ) {
+			$authority = $this->updateFromViaf( $authority );
+			$updated = true;
+		}
+		if( ( isset( $authority->links['enwiki'] ) || isset( $authority->links['dewiki'] ) || isset( $authority->links['frwiki'] ) ) && !isset( $authority->links['wikidata'] ) ) {
+			$authority = reset( $this->updateWithWikidata( array( $authority ) ) );
+			$updated = true;
+		}
+		if( $updated ) {
+			$this->storage->saveAuthority( $authority );
+		}
+		return $authority;
+	}
 }

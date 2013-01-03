@@ -39,18 +39,7 @@ if( $id == 0 ) {
 		exit();
 	}
 	$harvester = new BaseHarvester( $storage );
-	$updated = false;
-	if( ( isset( $authority->links['viaf'] ) || isset( $authority->links['enwiki'] ) ) && !isset( $authority->links['isni'] ) ) {
-		$authority = $harvester->updateFromViaf( $authority );
-		$updated = true;
-	}
-	if( ( isset( $authority->links['enwiki'] ) || isset( $authority->links['dewiki'] ) || isset( $authority->links['frwiki'] ) ) && !isset( $authority->links['wikidata'] ) ) {
-		$authority = reset( $harvester->updateWithWikidata( array( $authority ) ) );
-		$updated = true;
-	}
-	if( $updated ) {
-		$storage->saveAuthority( $authority );
-	}
+	$harvester->update( $authority );
 
 	$data = $authority->toArray();
 	switch( $format ) {
