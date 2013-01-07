@@ -278,7 +278,7 @@ class BaseHarvester {
 		return $links;
 	}
 
-	public function updateFromViaf( $auth ) { //TODO improve
+	public function updateFromViaf( $auth, $all = false ) { //TODO improve $all output all known links ie links that are not supported by the database but included in justlinks.json
 		if( !isset( $auth->links['viaf'] ) && !isset( $auth->links['enwiki'] ) ) {
 			return $auth;
 		}
@@ -316,6 +316,9 @@ class BaseHarvester {
 				}
 				if( !isset($auth->links['ulan']) && isset($result['JPG'][0]) ) {
 					$auth->links['ulan'] = $result['JPG'][0];
+				}
+				if( $all && !isset($auth->links['sudoc']) && isset($result['SUDOC'][0]) ) {
+					$auth->links['sudoc'] = $result['SUDOC'][0];
 				}
 				if( !isset($auth->links['enwiki']) && isset($result['WKP'][0]) ) {
 					$auth->links['enwiki'] = str_replace( '_', ' ', $result['WKP'][0]);
