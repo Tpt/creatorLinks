@@ -19,7 +19,7 @@ if( $id == 0 ) {
 	$authority->links['viaf'] = $id;
 	$storage = new Storage();
 	$harvester = new BaseHarvester( $storage );
-	$authority = $harvester->updateFromViaf( $authority );
+	$authority = $harvester->updateFromViaf( $authority, true );
 	if( $authority == null ) {
 		header( 'HTTP/1.1 404 Not Found' );
 		$data['error'] = 'Not found';
