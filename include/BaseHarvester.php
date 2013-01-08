@@ -302,7 +302,7 @@ class BaseHarvester {
 				if(!isset($auth->links['lccn']) && isset($result['LC'][0]) && preg_match('/^([a-z]{1,5})([0-9]{2,4})([0-9]{6})$/', $result['LC'][0], $m ) ) {
 					$auth->links['lccn'] = $m[1] . '/' . $m[2] . '/' . intval( $m[3] );
 				}
-				if( !isset($auth->links['gnd']) && isset($result['DNB'][0]) && preg_match( '/^http:\/\/d-nb\.info\/gnd\/([0-9]+)$/', $result['DNB'][0], $m ) ) {
+				if( !isset($auth->links['gnd']) && isset($result['DNB'][0]) && preg_match( '/^http:\/\/d-nb\.info\/gnd\/([0-9xX]+)$/', $result['DNB'][0], $m ) ) {
 					$auth->links['gnd'] = $m[1];
 				}
 				if( !isset($auth->links['nla']) && isset($result['NLA'][0]) ) {
