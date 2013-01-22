@@ -11,8 +11,8 @@ class BaseHarvester {
 		$this->storage = ($storage instanceof Storage) ? $storage : new Storage();
 	}
 
-	public function work() {
-		$this->scrollPages();
+	public function work( $prefix = '' ) {
+		$this->scrollPages( $prefix );
 	}
 
 	protected function scrollPages( $prefix = '' ) {
@@ -32,7 +32,6 @@ class BaseHarvester {
 					$this->workOnPages( $titles );
 					$i = 0;
 					$titles = array();
-					//exit(); //TODO
 				}
 			}
 			if( $i != 0 ) {
@@ -138,14 +137,20 @@ class BaseHarvester {
 	}
 
 	protected function parseLink( $link, $wiki = 'w', $lang = 'en' ) {
+		$wikis = array( 'w', 'wikipedia', 's', 'wikisource', 'q', 'wikiquote', 'b', 'wikibooks', 'commons', 'd', 'wikidata', 'wikispecies', 'n', 'wikinews', 'v', 'wikiversity', 'm', 'meta', 'wikt', 'voy' );
 		$link = trim( $link, " \t\n:");
 		$parts = explode( ':', $link, 3 );
-		if( count($parts) == 3 && in_array($parts[0], array( 'w', 's', 'wikipedia', 'wikisource', 'q', 'wikiquote' ) ) ) {
-			$wiki = $parts[0];
-			$lang = $parts[1];
-			$page = $parts[2];
+		if( count($parts) == 3 ) {
+			if( in_array( $parts[0], $wikis ) ) {
+				$wiki = $parts[0];
+				$lang = $parts[1];
+				$page = $parts[2];
+			} else {
+				$lang = $parts[0];
+				$page = $parts[1] . ':' . $parts[2];
+			}
 		} elseif( count($parts) == 2 ){
-			if( in_array($parts[0], array( 'w', 's', 'wikipedia', 'wikisource', 'q', 'wikiquote', 'commons', 'meta' ) ) ) { //TODO very hacky
+			if( in_array($parts[0], $wikis ) ) { //TODO very hacky
 				$wiki = $parts[0];
 			} else {
 				$lang = $parts[0];
@@ -198,7 +203,6 @@ class BaseHarvester {
 					$wikis[] = $wiki;
 					$titles[] = $title;
 					$authoritiesUsed[$wiki . '-' . $title] = $authority;
-//echo $wiki . '-' . $title . "\n";
 					$end = true;
 					break;
 				}
@@ -330,7 +334,6 @@ class BaseHarvester {
 	}
 
 	protected function save( $authorities ) {
-//print_r($authorities);
 		foreach( $authorities as $authority ) {
 			$saved = false;
 			foreach( $authority->links as $site => $title ) {

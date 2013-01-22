@@ -10,4 +10,9 @@ switch( $_SERVER['argv'][1] ) {
 		$harvester = new EnWikisourceHarvester();
 		break;
 }
-$harvester->work();
+
+$prefix = '';
+if( isset( $_SERVER['argv'][2] ) ) {
+	$prefix = $_SERVER['argv'][2];
+}
+$harvester->work( $prefix );
