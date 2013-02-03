@@ -3,7 +3,7 @@ include '../include/include.php';
 include '../config.php';
 
 $id = isset($_GET['id']) ? intval( $_GET['id'] ) : 0;
-$format = isset($_GET['format']) ? $_GET['format'] : 'json';
+$format = isset($_GET['format']) ? htmlspecialchars( $_GET['format'] ) : 'json';
 
 header( 'Content-Type: application/json; charset=utf-8' );
 header( 'access-control-allow-origin: *' );

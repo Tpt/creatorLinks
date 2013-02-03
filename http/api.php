@@ -3,12 +3,12 @@ include '../include/include.php';
 include '../config.php';
 
 
-$ids = isset($_GET['ids']) ? explode( '|', $_GET['ids'] ) : array();
+$ids = isset($_GET['ids']) ? explode( '|', htmlspecialchars( $_GET['ids'] ) ) : array();
 foreach( $ids as $key => $id ) {
 	$ids[$key] = intval( $id );
 }
-$sites = isset($_GET['sites']) ? explode( '|', rawurldecode( $_GET['sites'] ) ) : array();
-$titles = isset($_GET['titles']) ? explode( '|', rawurldecode( $_GET['titles'] ) ) : array(); //TODO
+$sites = isset($_GET['sites']) ? explode( '|', htmlspecialchars( rawurldecode( $_GET['sites'] ) ) ) : array();
+$titles = isset($_GET['titles']) ? explode( '|', htmlspecialchars( rawurldecode( $_GET['titles'] ) ) ) : array(); //TODO
 foreach( $titles as $key => $title ) {
 	$titles[$key] = str_replace( '_', ' ', $title );
 }

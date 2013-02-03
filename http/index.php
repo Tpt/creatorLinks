@@ -3,9 +3,9 @@ include '../include/include.php';
 include '../config.php';
 
 $id = isset($_GET['id']) ? intval( $_GET['id'] ) : 0;
-$site = isset($_GET['site']) ? rawurldecode( $_GET['site'] ) : '';
-$title = isset($_GET['title']) ? str_replace( '_', ' ', rawurldecode( $_GET['title'] ) ) : ''; //TODO
-$format = isset($_GET['format']) ? $_GET['format'] : 'html';
+$site = isset($_GET['site']) ? htmlspecialchars( rawurldecode( $_GET['site'] ) ) : '';
+$title = isset($_GET['title']) ? str_replace( '_', ' ', htmlspecialchars( rawurldecode( $_GET['title'] ) ) ) : ''; //TODO
+$format = isset($_GET['format']) ? htmlspecialchars( $_GET['format'] ) : 'html';
 
 if( $id == 0 ) {
 	if( $site == '' || $title == '' ) {
