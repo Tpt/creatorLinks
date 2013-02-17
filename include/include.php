@@ -6,5 +6,6 @@ include $dir . 'BaseHarvester.php';
 include $dir . 'CreatorHarvester.php';
 include $dir . 'EnWikisourceHarvester.php';
 include $dir . 'ItWikisourceHarvester.php';
+include $dir . 'PlWikisourceHarvester.php';
 include $dir . 'Authority.php';
 include $dir . 'Storage.php';
