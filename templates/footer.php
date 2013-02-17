@@ -3,7 +3,7 @@
 		<hr />
 		<footer class="footer">
 			<p>
-				Data extracted from creator pages of Wikimedia Commons and author pages of English Wikisource the 2 January 2013.
+				Data extracted from creator pages of Wikimedia Commons and author pages of English Wikisource the <?php echo $wgUpdateDate; ?>
 			</p>
 		</footer>
 	</div>
