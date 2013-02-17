@@ -9,6 +9,9 @@ switch( $_SERVER['argv'][1] ) {
 	case 'ensource':
 		$harvester = new EnWikisourceHarvester();
 		break;
+	case 'itsource':
+		$harvester = new ItWikisourceHarvester();
+		break;
 }
 
 $prefix = '';
